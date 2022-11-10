@@ -8,11 +8,16 @@
 import SwiftUI
 import CoreData
 
+enum Predicate {
+   case beginsWith
+   case contains
+}
+
 struct ContentView: View {
     @Environment(\.managedObjectContext) var moc
     @FetchRequest(sortDescriptors: []) var countries: FetchedResults<Country>
     @State private var lastNameFilter = "A"
-    private var predicate = "BEGINSWITH"
+    private var predicate: Predicate = .beginsWith
     
     var body: some View {
 //        VStack {

@@ -18,10 +18,29 @@ struct FilteredList<T: NSManagedObject, Content: View>: View {
         }
     }
     
-    init(filterKey: String, predicate: String, filterValue: String, content: @escaping (T) -> Content) {
+    init(filterKey: String, predicate: Predicate, filterValue: String, content: @escaping (T) -> Content) {
+        var predicateStr = ""
+        switch predicate {
+        case .beginsWith:
+            predicateStr = "BEGINSWITH"
+            
+        case .contains:
+            predicateStr = "CONTAINS"
+        }
         // wrap value in a new fetch request
-        _fetchRequest = FetchRequest<T>(sortDescriptors: [], predicate: NSPredicate(format: "%K \(predicate) %@", filterKey, filterValue))
+        _fetchRequest = FetchRequest<T>(sortDescriptors: [], predicate: NSPredicate(format: "%K \(predicateStr) %@", filterKey, filterValue))
         self.content = content
+    }
+    
+    func convert(predicate: Predicate) -> String {
+        switch predicate {
+        case .beginsWith:
+            return "BEGINSWITH"
+            
+        case .contains:
+            return "CONTAINS"
+        }
+        
     }
 }
 
