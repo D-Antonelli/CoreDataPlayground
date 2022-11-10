@@ -18,6 +18,7 @@ struct ContentView: View {
     @FetchRequest(sortDescriptors: []) var countries: FetchedResults<Country>
     @State private var lastNameFilter = "A"
     private var predicate: Predicate = .beginsWith
+    private var sortDescriptors: [NSSortDescriptor] = [.init(key: "firstName", ascending: false)]
     
     var body: some View {
 //        VStack {
@@ -61,7 +62,7 @@ struct ContentView: View {
 //        }
         VStack {
             // FilteredList(filter: lastNameFilter)
-            FilteredList(filterKey: "lastName", predicate: predicate, filterValue: lastNameFilter) { (singer: Singer) in
+            FilteredList(filterKey: "lastName", predicate: predicate, filterValue: lastNameFilter, sortDescriptors: sortDescriptors) { (singer: Singer) in
                 Text("\(singer.wrappedFirstName) \(singer.wrappedLastName)")
             }
             // list of matching singers

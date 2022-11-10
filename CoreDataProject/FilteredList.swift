@@ -18,7 +18,7 @@ struct FilteredList<T: NSManagedObject, Content: View>: View {
         }
     }
     
-    init(filterKey: String, predicate: Predicate, filterValue: String, content: @escaping (T) -> Content) {
+    init(filterKey: String, predicate: Predicate, filterValue: String, sortDescriptors: [NSSortDescriptor], content: @escaping (T) -> Content) {
         var predicateStr = ""
         switch predicate {
         case .beginsWith:
@@ -28,7 +28,7 @@ struct FilteredList<T: NSManagedObject, Content: View>: View {
             predicateStr = "CONTAINS"
         }
         // wrap value in a new fetch request
-        _fetchRequest = FetchRequest<T>(sortDescriptors: [], predicate: NSPredicate(format: "%K \(predicateStr) %@", filterKey, filterValue))
+        _fetchRequest = FetchRequest<T>(sortDescriptors: sortDescriptors, predicate: NSPredicate(format: "%K \(predicateStr) %@", filterKey, filterValue))
         self.content = content
     }
     
