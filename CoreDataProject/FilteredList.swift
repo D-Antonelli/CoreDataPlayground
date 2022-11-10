@@ -18,7 +18,7 @@ struct FilteredList<T: NSManagedObject, Content: View>: View {
         }
     }
     
-    init(filterKey: String, predicate: Predicate, filterValue: String, sortDescriptors: [NSSortDescriptor], content: @escaping (T) -> Content) {
+    init(filterKey: String, predicate: Predicate, filterValue: String, sortDescriptors: [SortDescriptor<T>], content: @escaping (T) -> Content) {
         var predicateStr = ""
         switch predicate {
         case .beginsWith:

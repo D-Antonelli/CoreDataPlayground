@@ -18,7 +18,7 @@ struct ContentView: View {
     @FetchRequest(sortDescriptors: []) var countries: FetchedResults<Country>
     @State private var lastNameFilter = "A"
     private var predicate: Predicate = .beginsWith
-    private var sortDescriptors: [NSSortDescriptor] = [.init(key: "firstName", ascending: false)]
+    private var sortDescriptors: [SortDescriptor<Singer>] = [SortDescriptor(\.lastName, order: .reverse)]
     
     var body: some View {
 //        VStack {
